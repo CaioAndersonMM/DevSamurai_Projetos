@@ -8,6 +8,7 @@
         *{
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
             overflow: hidden;
         }
     </style>
@@ -18,12 +19,14 @@
         const canvasElement = document.querySelector("canvas");
         const canvasContext = canvasElement.getContext("2d");
 
+        const mouse = {x:0, y:0};
+
         const field = {
             w: window.innerWidth,
             h: window.innerHeight,
 
             drawn: function(){
-                canvasContext.fillStyle = "#3F5F1C";
+                canvasContext.fillStyle = "#00205B";
                 canvasContext.fillRect(0, 0, canvasContext.width, canvasContext.height);
             }
         }
@@ -45,9 +48,14 @@
             raqueteSize: 20,
             raqueteHeight: 280,
 
+            _move: function () {
+                this.y = mouse.y - this.raqueteHeight/2;
+
+            },
             drawn: function(){
                 canvasContext.fillStyle = 'white';
                 canvasContext.fillRect(this.x, this.y, this.raqueteSize, this.raqueteHeight);
+                this._move();
             }
         }
 
@@ -58,9 +66,14 @@
             lineWidth: 20,
             raqueteHeight: 280,
 
+            _move: function () {
+                this.y = ball.y;
+
+            },
             drawn: function(){
                 canvasContext.fillStyle = 'white';
                 canvasContext.fillRect(canvasContext.width - this.raqueteSize - 10, this.y, this.raqueteSize, this.raqueteHeight);
+                this._move();
             }
         }
 
@@ -68,12 +81,18 @@
             ballSize: 30,
             x: 500,
             y: 300,
+            speed: 3,
 
+            _move: function() {
+                this.x+=1*this.speed;
+                this.y+=1*this.speed;
+            },
             drawn: function(){
                 canvasContext.beginPath();
                 canvasContext.arc(this.x, this.y, this.ballSize, 0, 2 * Math.PI);
                 canvasContext.fill();
                 canvasContext.closePath();
+                this._move();
             }
         }
 
@@ -86,7 +105,7 @@
                 canvasContext.font = "bold 78px Arial";
                 canvasContext.textAlign = "center";
                 canvasContext.textBaseline = "top";
-                canvasContext.fillStyle = "#01341D";
+                canvasContext.fillStyle = "#ffffff";
                 canvasContext.fillText(this.human, this.w, 40);
                 canvasContext.fillText(this.computer, this.w + this.w * 2, 40);
 
@@ -108,9 +127,31 @@
             score.drawn();
         }
 
-        setup();
-        drawn();
+        window.animateFrame = (function () {
+        return (
+          window.requestAnimationFrame ||
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame ||
+          window.oRequestAnimationFrame ||
+          window.msRequestAnimationFrame ||
+          function (callback) {
+            return window.setTimeout(callback, 1000 / 60)
+          }
+        )
+      })()
 
+      function main() {
+        animateFrame(main)
+        drawn()
+      }
+
+      setup()
+      main()
+
+      canvasElement.addEventListener('mousemove', function(e){
+        mouse.x = e.pageX;
+        mouse.y = e.pageY;
+      })
     </script>
 </body>
 </html>
