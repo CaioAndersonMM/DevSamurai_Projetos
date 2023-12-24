@@ -1,230 +1,38 @@
-<!DOCTYPE html>
-<html lang="pt">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jogo de PingPong</title>
-    <style>
-        *{
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-        #resetButton {
-            position: absolute; /* Define o posicionamento absoluto */
-            top: 4%;
-            left: 50%;
-            transform: translate(-60%, -65%);
-            background-color: #0d4ca3;
-            color: white;
-            border: none;
-            border-radius: 10%;
-            padding: 10px 10px;
-            font-size: 20px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        #resetButton:hover {
-            background-color: #820000; /* Cor de fundo ao passar o mouse */
-        }
-    </style>
-</head>
-<body>
-    <canvas></canvas>
-    <button id="resetButton">Resetar</button>
-    <script>
-        const canvasElement = document.querySelector("canvas");
-        const canvasContext = canvasElement.getContext("2d");
-
-        const mouse = {x:0, y:0};
-
-        const field = {
-            w: window.innerWidth,
-            h: window.innerHeight,
-
-            drawn: function(){
-                canvasContext.fillStyle = "#00205B";
-                canvasContext.fillRect(0, 0, canvasContext.width, canvasContext.height);
+    <!DOCTYPE html>
+    <html lang="pt">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="script.js"></script>
+        <title>Jogo de PingPong</title>
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                overflow: hidden;
             }
-        }
-
-        const rede = {
-            //w: window.innerWidth,
-            //h: window.innerHeight,
-            lineWidth: 20,
-            drawn: function(){
-                canvasContext.fillStyle = 'white';
-                canvasContext.fillRect(canvasContext.width/2 - this.lineWidth, 0, this.lineWidth, canvasContext.height);
+            #resetButton {
+                position: absolute; /* Define o posicionamento absoluto */
+                top: 4%;
+                left: 50%;
+                transform: translate(-60%, -65%);
+                background-color: #0d4ca3;
+                color: white;
+                border: none;
+                border-radius: 10%;
+                padding: 10px 10px;
+                font-size: 20px;
+                cursor: pointer;
+                transition: background-color 0.3s;
             }
-        }
-
-        const leftPaddle = {
-            x: 10,
-            y: 400,
-            lineWidth: 20,
-            raqueteSize: 20,
-            raqueteHeight: 200,
-
-            _move: function () {
-                this.y = mouse.y - this.raqueteHeight/2;
-            },
-            drawn: function(){
-                canvasContext.fillStyle = 'white';
-                canvasContext.fillRect(this.x, this.y, this.raqueteSize, this.raqueteHeight);
-                this._move();
+            #resetButton:hover {
+                background-color: #820000; /* Cor de fundo ao passar o mouse */
             }
-        }
-
-        const rigthPaddle = {
-            raqueteSize: 20,
-            x: 10,
-            y: 200,
-            lineWidth: 20,
-            raqueteHeight: 200,
-            speed: 2,
-            directionY: 1,
-
-            _move: function () {
-                this.x += this.directionX * this.speed;
-                this.y += this.directionY * this.speed;
-
-                if (this.y > field.h - this.raqueteHeight) {
-                    this.directionY = -1; 
-                }
-                if (this.y < 0) {
-                    this.directionY = 1;
-                }
-            },
-            drawn: function(){
-                canvasContext.fillStyle = 'white';
-                canvasContext.fillRect(canvasContext.width - this.raqueteSize - 10, this.y, this.raqueteSize, this.raqueteHeight);
-                this._move();
-            }
-        }
-
-        const ball = {
-            ballSize: 25,
-            x: 0,
-            y: 0,
-            directionY: 1,
-            directionX: 1,
-            speed: 4,
-
-            calcPosition: function(){
-                if (this.y > field.h - this.ballSize) {
-                    this.directionY = -1; 
-                }
-                if (this.y < 0) {
-                    this.directionY = 1;
-                }
-
-                //Pro lado Direito
-                if (this.x > field.w - rigthPaddle.raqueteSize - this.ballSize) {
-                    if (this.y + this.ballSize > rigthPaddle.y && this.y - this.ballSize < rigthPaddle.y + rigthPaddle.raqueteHeight) {
-                        this.directionX = -1;
-                    } else {
-                        score.human++;
-                        rigthPaddle.speed += 2;
-                        this._pointUp();
-                    }
-                }
-                //Pro lado esquerdo - Descondo do tamanho lateral da raquete e da bola
-                if (this.x < 0 + leftPaddle.raqueteSize + this.ballSize) {
-                    //bateu na raquete
-                    if (this.y + this.ballSize > leftPaddle.y && this.y - this.ballSize < leftPaddle.y + leftPaddle.raqueteHeight) {
-                        this.directionX = 1;
-                    } else{
-                        score.computer++;
-                        this._pointUp();
-                    }
-                }
-            },
-            _speedUp: function(){
-                if (this.speed < 16) {
-                    this.speed += 3;
-                }
-            },
-            _pointUp: function(){
-                this._speedUp();
-                this.y = field.h/2;
-                this.x = field.w/2;
-            },
-            _move: function() {
-                this.calcPosition();
-                this.x += this.directionX * this.speed;
-                this.y += this.directionY * this.speed;
-            },
-            drawn: function(){
-                canvasContext.beginPath();
-                canvasContext.arc(this.x, this.y, this.ballSize, 0, 2 * Math.PI);
-                canvasContext.fill();
-                canvasContext.closePath();
-                this._move();
-            }
-        }
-
-        const score = {
-           human: 0,
-           computer: 0,
-           w: window.innerWidth/4,
-
-            drawn: function(){
-                canvasContext.font = "bold 78px Arial";
-                canvasContext.textAlign = "center";
-                canvasContext.textBaseline = "top";
-                canvasContext.fillStyle = "#ffffff";
-                canvasContext.fillText(this.human, this.w, 40);
-                canvasContext.fillText(this.computer, this.w + this.w * 2, 40);
-            }
-        }
-
-        function setup(){
-            canvasElement.width = window.innerWidth;
-            canvasElement.height = window.innerHeight;
-            canvasContext.width = window.innerWidth;
-            canvasContext.height = window.innerHeight;
-        }
-        function drawn(){
-            field.drawn();
-            rede.drawn();
-            leftPaddle.drawn();
-            rigthPaddle.drawn();
-            ball.drawn();
-            score.drawn();
-        }
-
-        window.animateFrame = (function () {
-        return (
-          window.requestAnimationFrame ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame ||
-          window.oRequestAnimationFrame ||
-          window.msRequestAnimationFrame ||
-          function (callback) {
-            return window.setTimeout(callback, 1000 / 60)
-          }
-        )
-      })()
-
-      function main() {
-        animateFrame(main)
-        drawn()
-      }
-
-      setup()
-      main()
-
-      canvasElement.addEventListener('mousemove', function(e){
-        mouse.x = e.pageX;
-        mouse.y = e.pageY;
-      })
-
-      document.getElementById('resetButton').addEventListener('click', function () {
-            window.location.reload(true);
-            console.log("Botão de reset clicado!");
-        });
-
-    </script>
-</body>
-</html>
+        </style>
+    </head>
+    <body>
+        <canvas></canvas>
+        <button id="resetButton">Resetar</button>
+    </body>
+    </html>
