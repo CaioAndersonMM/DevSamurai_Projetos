@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="script.js"></script>
+    <title>Gerador de Senhas</title>
+</head>
+
+<body>
+    <h1>Gere sua Senha!</h1>
+    <p>Você pode utilizar para criar senhas robustas, forte e seguras. Lembre-se de guardá-las.</p>
+
+    <div>
+
+    </div>
+
+    <div>
+        <h2>Personalizar</h2>
+        <p id="lengthText">Tamanho: X</p>
+         
+        <input type="text" name="password" id="password">
+        <input type="range" name="passwordlength" id="passwordlength" value="8" min="4" max="64">
+        <input type="checkbox" name="maiusculas" id="maiusculas" checked="true">
+        <label for="maiusculas">Maiúsculas</label>
+        <input type="checkbox" name="numbers" id="numbers" checked="true">
+        <label for="numbers">Números</label>
+        <input type="checkbox" name="simbols" id="simbols" checked="true">
+        <label for="simbols">Simbolos</label>
+        <input type="checkbox" name="spaces" id="spaces" checked="true">
+        <label for="spaces">Espaços</label>
+
+        <button type="submit">Copiar Senha</button>
+
+
+    </div>
+</body>
+
+</html>
