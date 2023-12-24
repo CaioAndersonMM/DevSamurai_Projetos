@@ -11,10 +11,28 @@
             box-sizing: border-box;
             overflow: hidden;
         }
+        #resetButton {
+            position: absolute; /* Define o posicionamento absoluto */
+            top: 4%;
+            left: 50%;
+            transform: translate(-60%, -65%);
+            background-color: #0d4ca3;
+            color: white;
+            border: none;
+            border-radius: 10%;
+            padding: 10px 10px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        #resetButton:hover {
+            background-color: #820000; /* Cor de fundo ao passar o mouse */
+        }
     </style>
 </head>
 <body>
     <canvas></canvas>
+    <button id="resetButton">Resetar</button>
     <script>
         const canvasElement = document.querySelector("canvas");
         const canvasContext = canvasElement.getContext("2d");
@@ -50,7 +68,6 @@
 
             _move: function () {
                 this.y = mouse.y - this.raqueteHeight/2;
-
             },
             drawn: function(){
                 canvasContext.fillStyle = 'white';
@@ -65,9 +82,19 @@
             y: 200,
             lineWidth: 20,
             raqueteHeight: 200,
+            speed: 2,
+            directionY: 1,
 
             _move: function () {
-                this.y = ball.y;
+                this.x += this.directionX * this.speed;
+                this.y += this.directionY * this.speed;
+
+                if (this.y > field.h - this.raqueteHeight) {
+                    this.directionY = -1; 
+                }
+                if (this.y < 0) {
+                    this.directionY = 1;
+                }
             },
             drawn: function(){
                 canvasContext.fillStyle = 'white';
@@ -82,10 +109,9 @@
             y: 0,
             directionY: 1,
             directionX: 1,
-            speed: 5,
+            speed: 4,
 
             calcPosition: function(){
-                
                 if (this.y > field.h - this.ballSize) {
                     this.directionY = -1; 
                 }
@@ -99,8 +125,8 @@
                         this.directionX = -1;
                     } else {
                         score.human++;
-                        this.y = field.h/2;
-                        this.x = field.w/2;
+                        rigthPaddle.speed += 2;
+                        this._pointUp();
                     }
                 }
                 //Pro lado esquerdo - Descondo do tamanho lateral da raquete e da bola
@@ -110,12 +136,19 @@
                         this.directionX = 1;
                     } else{
                         score.computer++;
-                       
-                        this.y = field.h/2;
-                        this.x = field.w/2;
-
+                        this._pointUp();
                     }
                 }
+            },
+            _speedUp: function(){
+                if (this.speed < 16) {
+                    this.speed += 3;
+                }
+            },
+            _pointUp: function(){
+                this._speedUp();
+                this.y = field.h/2;
+                this.x = field.w/2;
             },
             _move: function() {
                 this.calcPosition();
@@ -143,7 +176,6 @@
                 canvasContext.fillStyle = "#ffffff";
                 canvasContext.fillText(this.human, this.w, 40);
                 canvasContext.fillText(this.computer, this.w + this.w * 2, 40);
-
             }
         }
 
@@ -187,6 +219,12 @@
         mouse.x = e.pageX;
         mouse.y = e.pageY;
       })
+
+      document.getElementById('resetButton').addEventListener('click', function () {
+            window.location.reload(true);
+            console.log("Botão de reset clicado!");
+        });
+
     </script>
 </body>
 </html>
