@@ -2,7 +2,7 @@
 
 Um simples jogo de Ping Pong implementado em HTML5, CSS3 e JavaScript.
 
-![Ping Pong](images/pingpong.png)
+![Ping Pong](pingpong.png)
 
 ## Sobre o Jogo
 
