@@ -46,7 +46,7 @@
             y: 400,
             lineWidth: 20,
             raqueteSize: 20,
-            raqueteHeight: 280,
+            raqueteHeight: 200,
 
             _move: function () {
                 this.y = mouse.y - this.raqueteHeight/2;
@@ -64,11 +64,10 @@
             x: 10,
             y: 200,
             lineWidth: 20,
-            raqueteHeight: 280,
+            raqueteHeight: 200,
 
             _move: function () {
                 this.y = ball.y;
-
             },
             drawn: function(){
                 canvasContext.fillStyle = 'white';
@@ -78,14 +77,50 @@
         }
 
         const ball = {
-            ballSize: 30,
-            x: 500,
-            y: 300,
-            speed: 3,
+            ballSize: 25,
+            x: 0,
+            y: 0,
+            directionY: 1,
+            directionX: 1,
+            speed: 5,
 
+            calcPosition: function(){
+                
+                if (this.y > field.h - this.ballSize) {
+                    this.directionY = -1; 
+                }
+                if (this.y < 0) {
+                    this.directionY = 1;
+                }
+
+                //Pro lado Direito
+                if (this.x > field.w - rigthPaddle.raqueteSize - this.ballSize) {
+                    if (this.y + this.ballSize > rigthPaddle.y && this.y - this.ballSize < rigthPaddle.y + rigthPaddle.raqueteHeight) {
+                        this.directionX = -1;
+                    } else {
+                        score.human++;
+                        this.y = field.h/2;
+                        this.x = field.w/2;
+                    }
+                }
+                //Pro lado esquerdo - Descondo do tamanho lateral da raquete e da bola
+                if (this.x < 0 + leftPaddle.raqueteSize + this.ballSize) {
+                    //bateu na raquete
+                    if (this.y + this.ballSize > leftPaddle.y && this.y - this.ballSize < leftPaddle.y + leftPaddle.raqueteHeight) {
+                        this.directionX = 1;
+                    } else{
+                        score.computer++;
+                       
+                        this.y = field.h/2;
+                        this.x = field.w/2;
+
+                    }
+                }
+            },
             _move: function() {
-                this.x+=1*this.speed;
-                this.y+=1*this.speed;
+                this.calcPosition();
+                this.x += this.directionX * this.speed;
+                this.y += this.directionY * this.speed;
             },
             drawn: function(){
                 canvasContext.beginPath();
@@ -97,8 +132,8 @@
         }
 
         const score = {
-           human: 1,
-           computer: 2,
+           human: 0,
+           computer: 0,
            w: window.innerWidth/4,
 
             drawn: function(){
