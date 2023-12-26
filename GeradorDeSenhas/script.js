@@ -23,7 +23,7 @@
 
             lengthText.innerText = "Tamanho: " + inputLength.value;
 
-            var words = "abcdefghijklmnopqrstuvwxyzçABCDEFGYIJKLMNOPQRSTUVYXIZÇ!?@#$%&*-=+-., âéê";
+            var words = " abcdefghijklmnopqrstuvwxyzçABCDEFGYIJKLMNOPQRSTUVYXIZÇ1234567890!?@#$%&*-=+-., âéê";
 
             var password = "";
 
@@ -33,18 +33,17 @@
             }
     
             if (!checksboxes.numbers) {
-                // Lógica para excluir números
+                words = words.replace(/\d+/g, '');
             }
     
             if (!checksboxes.simbols) {
-                // Lógica para excluir símbolos
+                words = words.replace(/[^a-zA-Z0-9]/g, '');
             }
     
             if (!checksboxes.spaces) {
-                // Lógica para excluir espaços
+                words = words.replace(/ /g, '');
             }
     
-
             for (let index = 0; index < inputLength.value; index++) {
                 const randomNumber = Math.floor(Math.random()*words.length);
                 password += words.substring(randomNumber, randomNumber + 1);
@@ -64,5 +63,30 @@
         inputCheckBox.forEach(function (checkbox) {
             checkbox.addEventListener('input', generatePassword);
         });
+
+        document.getElementById("btnCopy").addEventListener("click", copiarTexto);
+
+
+        function copiarTexto() {
+            passwordInput.select();
+        
+            // Cria uma seleção de texto
+            var range = document.createRange();
+            range.selectNodeContents(passwordInput);
+        
+            // Adiciona a seleção à área de transferência
+            var selecao = window.getSelection();
+            selecao.removeAllRanges();
+            selecao.addRange(range);
+        
+            // Executa o comando de cópia
+            document.execCommand("copy");
+        
+            // Limpa a seleção
+            selecao.removeAllRanges();
+        
+            // Informa ao usuário que o texto foi copiado (opcional)
+            alert("Texto copiado: " + passwordInput.value);
+        }
 
     });
