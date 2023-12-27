@@ -3,6 +3,8 @@
         const passwordInput = document.querySelector("#password");
         const lengthText = document.querySelector("#lengthText");
         const inputCheckBox = document.querySelectorAll('input[type="checkbox"]');
+        document.getElementById("btnCopy").addEventListener("click", copy);
+
 
         var checksboxes = {
             maiusculas: true,
@@ -54,8 +56,6 @@
 
         generatePassword();
 
-        //inputLength.addEventListener('input', generatePassword);
-
         inputLength.addEventListener('input', function () {
             generatePassword();
         });
@@ -64,28 +64,8 @@
             checkbox.addEventListener('input', generatePassword);
         });
 
-        document.getElementById("btnCopy").addEventListener("click", copiarTexto);
-
-
-        function copiarTexto() {
-            passwordInput.select();
-        
-            // Cria uma seleção de texto
-            var range = document.createRange();
-            range.selectNodeContents(passwordInput);
-        
-            // Adiciona a seleção à área de transferência
-            var selecao = window.getSelection();
-            selecao.removeAllRanges();
-            selecao.addRange(range);
-        
-            // Executa o comando de cópia
-            document.execCommand("copy");
-        
-            // Limpa a seleção
-            selecao.removeAllRanges();
-        
-            // Informa ao usuário que o texto foi copiado (opcional)
+        function copy() {
+            navigator.clipboard.writeText(passwordInput.value)
             alert("Texto copiado: " + passwordInput.value);
         }
 
