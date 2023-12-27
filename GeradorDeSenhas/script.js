@@ -3,9 +3,7 @@
         const passwordInput = document.querySelector("#password");
         const lengthText = document.querySelector("#lengthText");
         const inputCheckBox = document.querySelectorAll('input[type="checkbox"]');
-        document.getElementById("btnCopy").addEventListener("click", copy);
-
-
+       
         var checksboxes = {
             maiusculas: true,
             numbers: true,
@@ -63,6 +61,9 @@
         inputCheckBox.forEach(function (checkbox) {
             checkbox.addEventListener('input', generatePassword);
         });
+
+        document.getElementById("btnCopy1").addEventListener("click", copy);
+        document.getElementById("btnCopy2").addEventListener("click", copy);
 
         function copy() {
             navigator.clipboard.writeText(passwordInput.value)

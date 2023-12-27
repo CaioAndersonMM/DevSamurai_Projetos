@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6; 
+}
+
+.hero{
+    text-align: center;
+    padding-bottom: 3rem;
+}
+
+.hero h1{
+    font-size: 2rem;
+    font-weight: bold;
+    padding-bottom: 1rem;
+}
+
+.hero p{
+    font-size: 1.1rem;
+    color: #828282 ;
+}
+
+main{
+    max-width: 780px;
+    margin: 10% auto;
+}
+
+.box{
+    background: #ffff;
+    box-shadow: 0 1px 2px rgba(132, 148, 165, 1);
+    border-radius: 4px;
+    margin-bottom: 2%;
+}
+
+.password{
+    display: flex;
+    align-items: center;
+    padding: 1rem 1rem;
+}
+
+.password .text{
+    flex: 1;
+}
+
+.password .action button{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    opacity: 0.8;
+}
+.password .action button img{
+    width: 42px;
+}
+
+.password .text input{
+    font-weight: bold;
+    font-size: large;
+    border: none;
+    cursor: default;
+    height: 52px;
+    width: 100%;
+    user-select: none;
+}
+
+.security{
+    height: 10px;
+    background-color: #ddd;
+    border-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.security .bar{
+    height: 10px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+    transition: all 0.2s;
+}
+
+.security .bar.completed{
+    border-top-right-radius: 0;
+}
+.security .bar.critical{
+    background-color: #eb5757;
+}
+.security .bar.warning{
+    background-color: #f2c94c;
+}
+.security .bar.safe{
+    background-color: #27ae60;
+}
