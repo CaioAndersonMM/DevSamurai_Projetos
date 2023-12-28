@@ -25,7 +25,7 @@
                     <button id="btnCopy1">
                         <img src="copy.svg" alt="">
                     </button>
-                    <button class="reset">
+                    <button class="reset" id="reset">
                         <img src="reset.svg" alt="">
                     </button>
                 </div>
@@ -34,24 +34,52 @@
                 <div id="security-bar" class="bar safe" style="width: 90%"></div>
             </div>
         </section>
-        <div>
+        <section class="box customize">
             <h2>Personalizar</h2>
             <p id="lengthText">Tamanho: X</p>
-            
-            <input type="range" name="passwordlength" id="passwordlength" value="8" min="4" max="64">
-            <input type="checkbox" name="maiusculas" id="maiusculas" checked="true">
-            <label for="maiusculas">Maiúsculas</label>
-            <input type="checkbox" name="numbers" id="numbers" checked="true">
-            <label for="numbers">Números</label>
-            <input type="checkbox" name="simbols" id="simbols" checked="true">
-            <label for="simbols">Simbolos</label>
-            <input type="checkbox" name="spaces" id="spaces" checked="true">
-            <label for="spaces">Espaços</label>
-
             <button id="btnCopy2">Copiar Senha</button>
 
+        </section>
 
-        </div>
+        <section class="box action">
+            <input type="range" name="passwordlength" id="passwordlength" class="slide" value="8" min="4" max="64">
+            <div class="checks">
+                <div>
+                    <label for="maiusculas">
+                        <!-- <span class="checkmark"> </span> -->
+                        <input type="checkbox" name="maiusculas" id="maiusculas" checked="true">
+                        <span>Maiúsculas</span>
+                        <span class="checkmark"> </span>
+                    </label>
+                </div>
+                <div>
+                    <label for="numbers">
+                        <!-- <span class="checkmark"> </span> -->
+                        <input type="checkbox" name="numbers" id="numbers" checked="true">
+                        <span>Números</span>
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div>
+                    <label for="simbols">
+                        <!-- <span class="checkmark"> </span> -->
+                        <input type="checkbox" name="simbols" id="simbols" checked="true">
+                        <span>Simbolos</span>
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+                <div>
+                    <label for="spaces">
+                        <!-- <span class="checkmark"> </span> -->
+                        <input type="checkbox" name="spaces" id="spaces" checked="true">
+                        <span>Espaços</span>
+                        <span class="checkmark"></span>
+                    </label>
+                </div>
+            </div>
+
+        </section>
+
     </main>
 </body>
 
