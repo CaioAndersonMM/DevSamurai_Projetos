@@ -96,3 +96,126 @@ main{
 .security .bar.safe{
     background-color: #27ae60;
 }
+
+.box.customize{
+    user-select: none;
+    display: flex;
+    padding: 20px;
+    align-items: center;
+    gap: 25%;
+}
+
+.box.customize h2{
+    font-size: 1.1rem;
+}
+
+.box.customize p{
+    flex-grow: 1; /* Ele vai crescer e ocupar o espaço dos digitos aumentados */
+    font-size: 1.1rem;
+    color: #828282 ;
+}
+
+.box.customize button{
+    background-color: #a600b9;
+    color: #fff;
+    border: 2px solid #51064c93;
+    padding: 10px 20px;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.box.customize button:hover{
+    opacity: 1; 
+    background-color: #c93bad;
+    border-color: #900026;
+}
+
+.slide{
+    appearance: none;
+    width: 100%;
+    height: 15px;
+    background: #dddddd;
+    outline: none;
+    border-radius: 8px;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.slide:hover{
+    opacity: 1;
+}
+
+.slide::-webkit-slider-thumb {
+    width: 20px; 
+    height: 20px; 
+    background-color: #a600b9; 
+    border-radius: 50%; 
+    cursor: pointer;
+    -webkit-appearance: none;
+}
+
+
+.checks {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center; 
+}
+
+.checks input{
+    cursor: pointer;
+    height: 0px;
+    width: 0px;
+    flex-grow: 1;
+    transform: scale(1.5); 
+}
+
+.checks label {
+    font-size: 16px; 
+    color: #333;
+    user-select: none;
+}
+
+.checks .checkmark {
+    display: inline-block;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #dddddd;
+    transition: all 0.2s;
+    vertical-align: middle;
+    border-radius: 4px;
+}
+
+.checks div:hover .checkmark {
+    background-color: #cccccc;
+}
+
+/* .checks input:checked label .checkmark {
+    background-color: #d60303;
+}
+*/
+
+.checks input:checked ~ .checkmark {
+    background-color: #730c7eba;
+}
+
+.checks input:checked ~ .checkmark::after {
+    content: "";
+    display: block; /* Ver dps */
+    position: relative; /* Ver dps */
+    left: 9px; 
+    top: 3px; 
+    transform: rotate(45deg); 
+    width: 5px;
+    height: 13px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+}
