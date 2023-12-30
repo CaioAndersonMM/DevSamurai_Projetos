@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+      "target": "es5",                 // Versão do ECMAScript para a qual o código deve ser compilado
+      "module": "commonjs",            // Sistema de módulos a ser usado (por exemplo, commonjs)
+      "strict": true,                  // Habilita as opções de verificação rigorosa de tipos
+      "esModuleInterop": true,         // Permite interoperabilidade entre módulos ES6 e CommonJS
+      "skipLibCheck": true,            // Pula a verificação de tipos para arquivos de definição de biblioteca
+      "forceConsistentCasingInFileNames": true,  // Garante que os nomes de arquivos tenham a mesma grafia
+      "outDir": "./public/dist"               // Diretório de saída para os arquivos compilados
+      //"outDir": "./public/dist
+    }
+  }
